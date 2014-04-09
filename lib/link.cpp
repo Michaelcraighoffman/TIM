@@ -28,12 +28,13 @@ or implied, of the copyright holder.
 
 #include "stub.h"
 #include "link.h"
+#include "asmtypes.h"
 
-unsigned short LIO_RecvData (void *dest, unsigned long size, unsigned long WaitDelay) {
+USHORT LIO_RecvData (void *dest, ULONG size, ULONG WaitDelay) {
      STUB("LIO_RecvData");
      return 1;
 }
-unsigned short LIO_SendData (const void *src, unsigned long size) {
+USHORT LIO_SendData (const void *src, ULONG size) {
      STUB("LIO_SendData");
      return 1;
 }
