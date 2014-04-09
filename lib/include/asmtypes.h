@@ -29,6 +29,8 @@ or implied, of the copyright holder.
 #ifndef   ASMTYPES_H
 #define   ASMTYPES_H
 
+#include <stdint.h>
+
 #undef TRUE
 #define TRUE 1
 #undef FALSE
@@ -40,22 +42,22 @@ typedef bool Bool;
 typedef int Bool;
 #endif
 
-typedef unsigned char BYTE;
-typedef unsigned int DWORD;
-typedef signed char SBYTE;
-typedef signed char SCHAR;
-typedef signed int SDWORD;
-typedef signed int SINT;
-typedef signed long SLONG;
-typedef signed short SSHORT;
-typedef signed short SWORD;
-typedef unsigned char UBYTE;
-typedef unsigned char UCHAR;
-typedef unsigned int UDWORD;
-typedef unsigned int UINT;
-typedef unsigned int ULONG;
-typedef unsigned short USHORT;
-typedef unsigned short UWORD;
-typedef unsigned short WORD;
+typedef uint8_t BYTE;
+typedef uint32_t DWORD;
+typedef int8_t SBYTE;
+typedef int8_t SCHAR;
+typedef int16_t SDWORD;
+typedef int16_t SINT;
+typedef int32_t SLONG;
+typedef int16_t SSHORT;
+typedef int16_t SWORD;
+typedef uint8_t UBYTE;
+typedef uint8_t UCHAR;
+typedef uint32_t UDWORD;
+typedef uint16_t UINT;
+typedef uint32_t ULONG;
+typedef uint16_t USHORT;
+typedef uint16_t UWORD;
+typedef uint16_t WORD;
 
 #endif

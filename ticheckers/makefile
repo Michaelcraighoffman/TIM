@@ -5,7 +5,7 @@ OUTPUTDIR=../bin/
 LIBS= -lti89pc
 
 checkers : $(OBJECTS)
-	mkdir $(OUTPUTDIR)
+	mkdir -p $(OUTPUTDIR)
 	$(CC) $(CPPFLAGS) -o$(OUTPUTDIR)checkers $(OBJECTS) $(LIBS)
 clean:
 	rm -f *.o

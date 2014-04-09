@@ -28,7 +28,7 @@
 #include <kbd.h>
 #include <system.h>
 #include <compat.h>
-#include <../include/link.h>
+#include <link.h>
 
 // link translation variable
 short int linkmode = NOTRANSLATE;

@@ -31,9 +31,9 @@ or implied, of the copyright holder.
 
 unsigned short LIO_RecvData (void *dest, unsigned long size, unsigned long WaitDelay) {
      STUB("LIO_RecvData");
-     return 0;
+     return 1;
 }
 unsigned short LIO_SendData (const void *src, unsigned long size) {
      STUB("LIO_SendData");
-     return 0;
+     return 1;
 }
