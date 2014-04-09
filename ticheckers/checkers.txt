@@ -1,0 +1,328 @@
+/*********************************************************************/
+				Checkers  68k
+				 Version 1.1
+
+			   by John David Ratliff
+		      webmaster [AT] technoplaza.net
+			http://www.technoplaza.net
+
+			Last Updated: December 26, 2006
+/*********************************************************************/
+
+1.0 Basic Information
+
+	Checkers 68k is a clone of the ever-popular checkers game. If
+	you don't know what checkers is, you must be living in a very
+	isolated place. Anyway, checkers is a game of skill involving
+	two people. The object of the game is to get all of the other
+	persons checkers removed from the board. You do this by
+	manuevering your own checkers into strategic positions, in
+	order to jump over an opponents piece. When all your opponents
+	pieces have been jumped, you win, and vice versa, if all your
+	pieces get jumped, you lose. Pretty simple, no?
+
+	Well anyway, this game is an electronic version of Checkers.
+	The sprites are notoriously bad, but that's because I'm not a
+	graphics artist and had to shrink these down from 66x66 sprites
+	on my computer to 16x10 on the calculator. If you know how to
+	do grayscale sprites and want to help me out, I'll be glad to
+	stick your name in here. :-)
+
+	This program supports three types of play. On-calc two player
+	in which each player takes turns using the same calculator,
+	red (white as it looks) goes first, then black. This is
+	probably not the ideal way to play the game, but it's the
+	easiest, most hassle-free and cheapest way (don't need two
+	calculators). The second method is to play against the
+	computer. The computer is always black. The third method is to
+	use two calculators with the game on it, and use the link cable
+	to play one against another. This is probably the most fun, but
+	definitely the hardest one to work with, especially if you're
+	trying to play in math class. ;-)
+
+	The game will work on a TI-89 or TI-92+, and you can do link
+	play between a TI-89 and a TI-92+, if you have those calcs.
+	The program is the same on both calculators. I only have a
+	TI-89, so there may be unknown issues with TI-92+ calcs since
+	I can't test it on a real calculator. Though I do nearly 95% of
+	my testing using VTI anyway. I generally only test speed and
+	play control with real calculators.
+
+	If you want more general information on Checkers, or information
+	about any of the rules, all of the rules and information used in
+	the creation of this game came from this site:
+
+	http://www.mypage.onemain.com/jimloy/checkers/checkers.htm
+	http://www.mypage.onemain.com/jimloy/checkers/rules.htm
+
+2.0 Revision History
+	Version 1.1	- December 26, 2006
+		- modified source to compile on current TIGCC 0.96 b8
+	Version 1.0	- June 26, 2001
+		- changed background graphics so the game is easier to see
+		- fixed bug where game thought you could move when you couldn't
+		- fixed bug where AI didn't check for winner
+		- added complete source code comments
+		- replaced multiplications with bit shifting for better efficiency
+		- improved speed by rewriting inefficient test functions
+		- removed old selection nuances (like deselection, which was made
+		  unnecessary by reselection feature)
+		- fixed protected memory violation bug in move checking routine
+		- added jump flashing so you can tell where the AI jumps
+		- fixed bug where AI didn't consider king promotion weights
+		- fixed bug in AI where jumpbacks weren't considered properly
+		- updated and corrected beta documentation
+		- initial public release
+	Public Beta 3.1	- June 23, 2001
+		- added support for multiple jumps by the AI
+	Public Beta 3 - June 23, 2001
+		- added support for reselecting pieces without deselecting the
+		  original piece
+		- fixed save state support and disabled it during linkplay
+		- added single selection multi-jump support (you no longer have
+		  to reselect your piece when it performs a multi-jump, just
+		  keep moving to the next jump position)
+		- fixed bug where game would only think there was a winner if no
+		  pieces are left. Now, if one side can't move, the other side
+		  wins.
+		- added AI for vs. Computer play
+		- fixed Jump bug where it would not allow you to jump more than
+		  one way if more than one jump was possible.
+	Public Beta 2 - June 16, 2001
+		- added support for link play between 2 TI-89's or 2 TI-92+'s
+		- added support for link play between a TI-89 and TI-92+
+	Public Beta 1 - June 15, 2001
+		- initial beta release
+		- support for on-calc two player
+
+3.0 Gameplay Information
+
+	From the home screen, send the program to the calculator. Run the
+	program by typing checkers() and pressing ENTER. From the main
+	intro screen, press ENTER to start the game, or use the other
+	menu options to change the game options. By default, the game
+	will start in 2 player on-calc mode.
+
+	The game is fairly simple to play. Red moves first (the red pieces
+	look white, but they actually come from a red checker). To move,
+	use the arrow keys to find the piece. A highlighted square will
+	show you where you are. Press ENTER to select a piece, then move
+	the highlighted square (it has a different color when you're moving,
+	rather than when you are just selecting which piece to move) to the
+	position you wish to move into. Red checkers move diagonally forward
+	(up the screen). You will not be allowed to make illegal moves. If you
+	try to make an illegal move, an error message will be displayed.
+
+	To jump, select the square diagonally behind the opponents piece you
+	wish to jump. If you are doing a multi-jump move, you will need to
+	do the jumps one-by-one, so make the first jump, then it will display
+	a message saying "Multi Jump" which lets you know you have a multi-jump
+	opportunity. You must jump if you can, and you must complete all
+	multi-jumps, if you begin one. If you have a choice of several jumps,
+	you may make whichever one you want. If you attempt to make a move when
+	you have a jump available, the program will display a "Must Jump" message
+	and highlight the first jump opportunity it finds. There may be other
+	jump opportunities as well, but only the first one will be highlighted.
+
+	Black moves second, and the rules behave the same way. Black checkers
+	move diagonally downward (down the screen). If you selected vs. Computer
+	mode from the intro screen, the computer will play the black side. It will
+	not use the selection system, but rather simply move a piece and return
+	control to you. As the checkers AI is very simple, it shouldn't take any
+	noticable amount of time to make its move.
+
+	If any piece is advanced to the eigth rank (i.e. you get a checker
+	all the way across the board), it attains the rank of King Checker. Kings
+	have the ability to move both forward and backward, but a king can still
+	be jumped by a normal piece, or another king of course.
+
+	When all the checkers of one side or another are gone, the side who still
+	has checkers wins. If either side becomes unable to move (all their pieces
+	are blocked), then that side loses. When one side loses the game, a message
+	displaying the winner is printed at the top of the screen replacing the
+	logo. You can press any key to exit the game after that.
+
+	You cannot jump your own pieces, and you cannot make jumps that jump over
+	two pieces. A jump is a diagonal move over a piece of the opposite color
+	to the diagonal square directly behind the opposing piece. The game will not
+	allow you to make illegal moves, and will alert you to such errors.
+
+	Other Options:
+
+		Pressing F1 during the game will save the current game. You
+		can then load that game by pressing F2. There is only room
+		for one save game, and it takes approximately 200 bytes of
+		memory on the calculator. For more information, see the
+		section on real-time state saving/loading.
+
+		Pressing ESC will exit the game. If you quit a game without
+		saving it, the game is lost, and cannot be retrieved. You
+		will not be prompted to exit, so watch out for accidental
+		ESC keypresses. State saving is disabled in link-play, but
+		you may save your state in vs. computer mode or on-calc 2
+		player. The computer will never attempt to save or load the
+		game.
+
+		In Link Play mode, if your calculator is not responding to
+		link actions, and it appears locked up, press the ON key to
+		abort the link mode and force-quit the game. Do not do this
+		lightly though, because you will lose the current game if you
+		abort the link, and will have to restart.
+
+4.0 Real Time State Saving/Loading
+
+	Checkers 68k has a unique feature. Real-time state saving. This
+	means you can save your game at any time in the game, and it will
+	be ready for you to reload at any time you choose. So, if you were
+	almost sure about one move, and wanted to try it out, but wanted to
+	see what might have happened if you'd done something different, you
+	can save the game at that position, then load it back when you want
+	to try something new.
+
+	To save a game state, simply press the F1 key when playing a game.
+	To load the game state, press the F2 key while playing.
+
+	Only one game may be saved at a time, for simplicity, so you can't
+	switch back and forth between two games unless you rename them by
+	hand. The state file must be called chksaves (checker save state).
+	You can delete it if you wish, but you will be unable to do state
+	saving if you archive it. However, you should still be able to
+	load the state.
+
+	If the load or save fails for some reason, a message will be
+	displayed across the right hand part of the screen. Conversely, if
+	the load/save is a success, that message will be displayed instead.
+
+	State Loading/Saving is disabled when link play is enabled. It
+	has the potential to cause instability if both sides don't load the
+	exact same data. I may try to implement this in the future.
+
+5.0 Link Play Information
+
+	To do link play, you will need two calculators. It does not matter
+	if they are TI-89's or TI-92+'s, or one of each. You must transfer
+	the program to both calculators and run the program on both
+	calculators.
+
+	First decide which side is going to play Red and which side will
+	play Black. Red always goes first. When you have decided which side
+	will play what color, start the program on both calculators. The link
+	cable must be in both link ports before you start the game, or it
+	may not work. This is just one of the nuances of link play.
+
+	Okay, press the F1 key to select Link Play for the side you have
+	chosen. If you both pick the same side, the link timer will time out
+	and an error dialog will display. The timeout is 20 seconds, but if
+	you accidentally chose incorrectly, press ON and the link will
+	abort immediately.
+
+	When you have picked Link Play for the side you want, press ENTER.
+	The calculators will then send data to the other calculator on what
+	kind of calculator they are using, so the program knows how to
+	interpret the key presses (TI-92+ keyboard is slightly different
+	from the TI-89 keyboard). Once the link has been establish, the
+	game screen will show up.
+
+	To play the game, simply play as you normally would. Red play goes
+	first. The selections and moves of the player will display on
+	both calculators, so you can see what the other person does, as
+	they do it.
+
+	If at any time, the link stops functioning, or the link cord is
+	pulled out of either calculator, one or both of the calculators may
+	appear to lock up. This is in fact not so. Rather, the calculator
+	may simply be waiting for data that is never going to come. If this
+	happens, press the ON button of the affected calculator. This will
+	force-quit the link and the game. You might try alternatively to
+	remove the link cable from both calcs and reinsert it. The second
+	option may or may not work, and it has not been tested. If you
+	press the ON button, the game is lost, and you will not be able to
+	get back to that game, unless you remember all the moves you made.
+
+6.0 Human vs. Computer Information
+
+	To play against the computer, simply choose that option from the
+	menu. When vs. Computer mode is selected, press ENTER to start
+	the game. The player moves first, and is in control of the red
+	pieces. Once you have made a move, the computer will analyze its
+	moves and make the one it thinks is best. The AI is probably not
+	the smartest computer on the block, but it's no dummy. I've
+	played games against it where it actually managed to force me
+	into a stalemate. (We both had a king left, and the AI isn't
+	programmed to sacrifice himself if its avoidable). I hope it
+	makes for fun gameplay without being impossible to beat.
+
+	How does the AI work? Well, the code is not too complex (one of
+	the smaller segments actually -- it's much harder to enforce the
+	rules than to teach the computer to play within them). The AI
+	is really not an AI at all. There is no strategy involved in the
+	game at all. It makes the move it considers best for the current
+	time.
+
+	How does it know which move is best? Simple. The computer has a
+	system of weights assigned to what will happen based on the move
+	it makes. Multiple jumps are weighted highest. Then jumps, then
+	regular moves. A move that will result in a multiple retaliation
+	jump (i.e. I move, and you jump 2 or more pieces back) has the
+	highest negative weight (i.e. this move is weighted less). Single
+	retaliatory jumps are also weighted negatively, but not as much.
+	Moves, jumps, and multiple jumps that result in king promotion
+	are given bonus positive weights. The best move for the computer
+	to make is the one that has the highest weight. This is not a
+	good checkers strategy, but then again, it's not really an AI,
+	as it does not think.
+
+	Frequently Asked "AI" Questions:
+
+	Q: Why does the computer seem to move the first piece when it has
+	   many pieces it could move instead?
+
+	A: This is actually not so. The game considers equal weights to be
+	   no better than the other move, except when the randomness factor
+	   comes in. Basically, 1/3 of the time, the computer will select
+	   a move that is equal to its current best move as a "better" move,
+	   although it is actually not. This gives the game a more "realistic"
+	   feeling.
+
+	Q: Did you base this system on any checker playing programs?
+
+	A: No. First, they are far more complex than I wanted to implement,
+	   second, it would have taken far longer to develop, and third,
+	   I don't think its much fun playing against an almost unbeatable
+	   opponent. When master player's lose to computer programs, then
+	   it's clear that any average player will too.
+
+	Q: If you wanted it to be beatable, but also good, why not have
+	   a difficulty level for the computer?
+
+	A: Well, that too takes lots of time, and I just don't feel like
+	   the program will gain much from becomming a great player. It
+	   was designed to reduce boredom, not to be an unsolvable
+	   puzzle.
+
+	Q: This AI sucks. Why can't you make a better one?
+
+	A: If you think you can do better, by all means go ahead. I'll add
+	   it to the official distribution if I think it's good. The source
+	   code is freely available, you know. As for me, I don't have the
+	   time or interest to pursue a great AI project right now.
+
+7.0 Updates and Revisions
+
+	The latest release of this program will always be on my website,
+	http://www.technoplaza.net. Just look in the programs section. In
+	addition, I also upload my programs to the two largest calculator
+	archives on the net, ticalc.org, and calc.org.
+
+8.0 Copyright Information
+
+	This program is copyright (C) 2001,2006 Techno-Plaza.
+
+	The program is freely redistributable under the terms of the
+	GNU General Public License. For the full terms of the GNU
+	GPL, visit http://www.fsf.org/
+
+	Basically, you may not restrict distribution of this program in
+	any way. You can change it, but you have to make those changes
+	available to the public. You may have the source code, but if you
+	distribute it, you must release the source also.
