@@ -38,7 +38,7 @@ or implied, of the copyright holder.
 
 enum HeapWalkCmds {H_WALK_VERIFY = 0, H_WALK_STATUS = 1, H_WALK_DUMP = 2, H_WALK_SYM = 3};
 
-typedef USHORT HANDLE;
+typedef unsigned short HANDLE;
 typedef struct {
      void * Data;
      Bool Allocated;
@@ -47,16 +47,16 @@ typedef struct {
 extern MemoryBlock AllHandles[MAX_HANDLES];
 
 
-void *calloc_throw (USHORT NoOfItems, USHORT SizeOfItems);
-SSHORT FreeHandles (void);
-HANDLE HeapAlloc (ULONG Size);
-HANDLE HeapAllocESTACK (ULONG Size);
-HANDLE HeapAllocHigh (ULONG Size) ;
-HANDLE HeapAllocHighThrow (ULONG Size);
-void *HeapAllocPtr (ULONG Size);
-void *HeapAllocPtrThrow (ULONG Size);
-HANDLE HeapAllocThrow (ULONG Size);
-ULONG HeapAvail (void);
+void *calloc_throw (unsigned short NoOfItems, unsigned short SizeOfItems);
+short FreeHandles (void);
+HANDLE HeapAlloc (unsigned long Size);
+HANDLE HeapAllocESTACK (unsigned long Size);
+HANDLE HeapAllocHigh (unsigned long Size) ;
+HANDLE HeapAllocHighThrow (unsigned long Size);
+void *HeapAllocPtr (unsigned long Size);
+void *HeapAllocPtrThrow (unsigned long Size);
+HANDLE HeapAllocThrow (unsigned long Size);
+unsigned long HeapAvail (void);
 void HeapCompress (void);
 void *HeapDeref (HANDLE Handle);
 void *HeapEnd (void);
@@ -64,18 +64,18 @@ void HeapFree (HANDLE Handle);
 void HeapFreeIndir (HANDLE *HandlePtr);
 void HeapFreePtr (void *Ptr);
 HANDLE HeapGetHandle (void);
-SSHORT HeapGetLock (HANDLE Handle);
+short HeapGetLock (HANDLE Handle);
 HANDLE HeapLock (HANDLE Handle);
-ULONG HeapMax (void);
+unsigned long HeapMax (void);
 HANDLE HeapPtrToHandle (void *Ptr);
-HANDLE HeapRealloc (HANDLE Handle, ULONG NewSize);
-HANDLE HeapReallocThrow (HANDLE Handle, ULONG NewSize);
+HANDLE HeapRealloc (HANDLE Handle, unsigned long NewSize);
+HANDLE HeapReallocThrow (HANDLE Handle, unsigned long NewSize);
 void HeapShuffle();
-ULONG HeapSize (HANDLE Handle);
+unsigned long HeapSize (HANDLE Handle);
 HANDLE HeapUnlock (HANDLE Handle);
-SSHORT HeapWalk (SSHORT function);
+short HeapWalk (short function);
 void *HLock (HANDLE Handle);
-void *malloc_throw (ULONG Size);
-void *realloc_throw (void *Ptr, ULONG NewSize);
+void *malloc_throw (unsigned long Size);
+void *realloc_throw (void *Ptr, unsigned long NewSize);
 
 #endif    /* alloc_h */

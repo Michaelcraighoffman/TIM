@@ -4,21 +4,21 @@
 
 MemoryBlock AllHandles[MAX_HANDLES];
 
-void *calloc_throw (USHORT NoOfItems, USHORT SizeOfItems) {
+void *calloc_throw (unsigned short NoOfItems, unsigned short SizeOfItems) {
     PARTIAL("calloc_throw - No Error Handling");
     return calloc(NoOfItems, SizeOfItems);
 }
-SSHORT FreeHandles (void) {
+short FreeHandles (void) {
     TRACK("FreeHandles");
-    SSHORT count=0;
-    for(SSHORT i=1; i<MAX_HANDLES; i++) {
+    short count=0;
+    for(short i=1; i<MAX_HANDLES; i++) {
           if(AllHandles[i].Allocated==false) {
                count++;
           }
      }
      return count;
 }
-HANDLE HeapAlloc (ULONG Size) {
+HANDLE HeapAlloc (unsigned long Size) {
      TRACK("HeapAlloc");
      MemoryBlock Mem;
      HANDLE H=H_NULL;
@@ -35,19 +35,19 @@ HANDLE HeapAlloc (ULONG Size) {
      }
      return H;
 }
-HANDLE HeapAllocESTACK (ULONG Size) {
+HANDLE HeapAllocESTACK (unsigned long Size) {
      TRACK("HeapAllocESTACK");
      return HeapAlloc(Size);
 }
-HANDLE HeapAllocHigh (ULONG Size) {
+HANDLE HeapAllocHigh (unsigned long Size) {
      TRACK("HeapAllocHigh");
      return HeapAlloc(Size);
 }
-HANDLE HeapAllocHighThrow (ULONG Size) {
+HANDLE HeapAllocHighThrow (unsigned long Size) {
      PARTIAL("HeapAllocHighThrow - No Error Handling");
      return HeapAllocHigh(Size);
 }
-void *HeapAllocPtr (ULONG Size) {
+void *HeapAllocPtr (unsigned long Size) {
      TRACK("HeapAllocPtr");
      MemoryBlock Mem;
      HANDLE H;
@@ -64,24 +64,24 @@ void *HeapAllocPtr (ULONG Size) {
      }
      return Mem.Data;
 }
-void *HeapAllocPtrThrow (ULONG Size){
+void *HeapAllocPtrThrow (unsigned long Size){
      PARTIAL("HeapAllocPtrThrow - No Error Handling");
      return HeapAllocPtr(Size);
 }
-HANDLE HeapAllocThrow (ULONG Size){
+HANDLE HeapAllocThrow (unsigned long Size){
      PARTIAL("HeapAllocThrow - No Error Handling");
      return HeapAlloc(Size);
 }
-ULONG HeapAvail (void){
+unsigned long HeapAvail (void){
      TRACK("HeapAvail");
      return 50000;
 }
 void HeapCompress (void) {
      TRACK("HeapCompress");
-     for(SSHORT i=0; i<MAX_HANDLES; i++) {
+     for(short i=0; i<MAX_HANDLES; i++) {
           if(AllHandles[i].Allocated==FALSE) {
                /* Find a non-empty, unlocked block */
-               SSHORT j;
+               short j;
                for(j=i+1; j<MAX_HANDLES; j++) {
                     if(  AllHandles[j].Locked==FALSE &&
                          AllHandles[j].Allocated==TRUE) {
@@ -124,7 +124,7 @@ void HeapFreePtr (void *Ptr) {
 }
 HANDLE HeapGetHandle (void) {
      TRACK("HeapGetHandle");
-     for(SSHORT i=1; i<MAX_HANDLES; i++) {
+     for(short i=1; i<MAX_HANDLES; i++) {
           if(AllHandles[i].Allocated==FALSE) {
                return i;
           }
@@ -140,7 +140,7 @@ HANDLE HeapLock (HANDLE Handle) {
      AllHandles[Handle].Locked=TRUE;
      return Handle;
 }
-ULONG HeapMax (void) {
+unsigned long HeapMax (void) {
      TRACK("HeapMax");
      /* TI-Calc says the function always causes compression */
      HeapCompress();
@@ -154,26 +154,26 @@ ULONG HeapMax (void) {
 }
 HANDLE HeapPtrToHandle (void *Ptr) {
      TRACK("HeapPtrToHandle");
-     for(SSHORT i=1; i<MAX_HANDLES; i++) {
+     for(short i=1; i<MAX_HANDLES; i++) {
           if(Ptr == AllHandles[i].Data) {
                return i;
           }
      }
      return H_NULL;
 }
-HANDLE HeapRealloc (HANDLE Handle, ULONG NewSize) {
+HANDLE HeapRealloc (HANDLE Handle, unsigned long NewSize) {
      PARTIAL("HeapRealloc - Needs rewrite to avoid data loss on failure");
      HeapFree(Handle);
      return HeapAlloc(NewSize);
 }
-HANDLE HeapReallocThrow (HANDLE Handle, ULONG NewSize) {
+HANDLE HeapReallocThrow (HANDLE Handle, unsigned long NewSize) {
      PARTIAL("HeapReallocThrow - No Error Handling");
      return HeapRealloc(Handle, NewSize);
 }
 void HeapShuffle() {
      TRACK("HeapShuffle");
-     for(SSHORT i=0; i<MAX_HANDLES; i++) {
-          SSHORT NewPosition=rand()%MAX_HANDLES;
+     for(short i=0; i<MAX_HANDLES; i++) {
+          short NewPosition=rand()%MAX_HANDLES;
           MemoryBlock Hold;
           Hold=AllHandles[i];
           AllHandles[i]=AllHandles[NewPosition];
@@ -181,7 +181,7 @@ void HeapShuffle() {
      }
 }
 
-ULONG HeapSize (HANDLE Handle) {
+unsigned long HeapSize (HANDLE Handle) {
      TRACK("HeapSize");
      return sizeof(AllHandles[Handle].Data);
 }
@@ -190,7 +190,7 @@ HANDLE HeapUnlock (HANDLE Handle) {
      AllHandles[Handle].Locked=FALSE;
      return Handle;
 }
-SSHORT HeapWalk (SSHORT function) {
+short HeapWalk (short function) {
      STUB("HeapWalk");
      return 0;
 }
@@ -199,11 +199,11 @@ void *HLock (HANDLE Handle) {
      HeapLock(Handle);
      return HeapDeref(Handle);
 }
-void *malloc_throw (ULONG Size) {
+void *malloc_throw (unsigned long Size) {
      PARTIAL("malloc_throw - No error handling");
      return malloc(Size);
 }
-void *realloc_throw (void *Ptr, ULONG NewSize) {
+void *realloc_throw (void *Ptr, unsigned long NewSize) {
      PARTIAL("realloc_throw - No error handling");
      return realloc(Ptr,NewSize);
 }
