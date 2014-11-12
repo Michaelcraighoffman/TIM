@@ -8,7 +8,9 @@ Porting to TIM
 ----------------------------------------------
 
 The header names correspond directly to those in the standard TIGCC distribution (some may be missing if they're not implemented).  TIGCC uses void _main() as it's entry point, but PC compilation requires an int main().  This can be as simple as putting:
+
 int main() { _main(); return 0; } 
+
 just below your _main definition.  
 
 
@@ -16,9 +18,13 @@ Information about TIM's structure
 ----------------------------------------------------------
 
 The include files seek to emulate the TIGCC library, listed at http://tigcc.ticalc.org/doc/hdrindex.html
+
 Source files which begin with two underscores ( __ ) are TIM internals.  
 
 __custom provides a convenient way to access the bits of a byte, so that the code is easier to read (ie no bitshifts)
+
 __font and __fontimages provides the fonts for TIM
+
 __timsystem is the interface to allegro
+
 __once is the library constructor and destructor to set up the library for use
