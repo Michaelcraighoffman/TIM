@@ -21,4 +21,4 @@ Source files which begin with two underscores ( __ ) are TIM internals.
 __custom provides a convenient way to access the bits of a byte, so that the code is easier to read (ie no bitshifts)
 __font and __fontimages provides the fonts for TIM
 __timsystem is the interface to allegro
-__once is the library constructor and destructor to set up the 
+__once is the library constructor and destructor to set up the library for use
